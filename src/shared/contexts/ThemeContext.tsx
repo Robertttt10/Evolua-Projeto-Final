@@ -6,8 +6,8 @@ import { Box } from "@mui/system";
 interface IThemeContextData{
   themeName: 'Light' | 'Dark';
   toggleTheme: () => void;
-}
-;
+};
+
 const ThemeContext = createContext({} as IThemeContextData)
 
 export const useAppThemeContext = () => {
