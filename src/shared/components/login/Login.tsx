@@ -1,6 +1,7 @@
-import { Box, Card, CardHeader, DialogTitle, Divider, styled, TextField, Toolbar, Typography, useTheme } from "@mui/material"
+import { Box, Button, Card, CardHeader, DialogTitle, Divider, styled, TextField, Toolbar, Typography, useTheme } from "@mui/material"
 import { grey } from "@mui/material/colors";
-import { padding, positions } from "@mui/system";
+import { display, margin, padding, positions } from "@mui/system";
+import { Link } from "react-router-dom";
 
 export const Login: React.FC = () => {
 
@@ -9,60 +10,48 @@ export const Login: React.FC = () => {
   const StyledBox = styled(Box)({
     display: "flex",
     justifyContent: "center",
-    alignItems: 'center',
-    paddingTop: 50
-
+    marginTop: 20,
   })
 
   const LoginForm = styled(Card)({
     height: '70vh',
-    width: '25vw',
-    alignItems: 'center',
+    display: 'flex',
+    margin: 0,
     justifyContent: 'center'
   })
 
   const InputTextStyled = styled(TextField)({
-    justifyContent: 'center',
-    margin: 20
+    width:400,
+    marginTop:15
   })
 
   return (
     <StyledBox>
       <LoginForm>
-        <Typography sx={{display:'flex',justifyContent:'center'}} variant="h6">Login</Typography>
-        <Box sx={{display:'flex', flexDirection:'column', justifycontent:'center'}}>
-        <InputTextStyled 
-          id="inputEmail"
-          label="E-mail"
-          autoComplete="current-password"
-          variant="standard"
-          />
-        <Divider />
-        <InputTextStyled
-          id="inputPassword"
-          label="Password"
-          type="password"
-          autoComplete="current-password"
-          variant="standard"
-          />
+        <Box sx={{paddingTop:5}}>
+          <Box sx={{ display: 'flex', justifyContent: 'center' }}>
+            <Typography variant="h6">Login</Typography>
           </Box>
-      </LoginForm>
-      <LoginForm sx={{}}>
-        <Typography sx={{justifyContent:'center'}} variant="h6">Login</Typography>
-        <InputTextStyled
-          id="inputEmail"
-          label="E-mail"
-          autoComplete="current-password"
-          variant="standard"
-        />
-        <Divider />
-        <InputTextStyled
-          id="inputPassword"
-          label="Password"
-          type="password"
-          autoComplete="current-password"
-          variant="standard"
-        />
+          <Box sx={{paddingTop:10, paddingLeft:10, paddingRight:10}}>
+            <InputTextStyled
+              id="inputEmail"
+              label="E-mail"
+              variant="standard"
+            />
+            <Divider />
+            <InputTextStyled
+              id="inputPassword"
+              label="Password"
+              type="password"
+              autoComplete="current-password"
+              variant="standard"
+            />
+          </Box>
+          <Box sx={{paddingTop:5, paddingLeft:10, paddingRight:10, display:'flex', justifyContent:'space-between'}}>
+          <Button  variant="contained" color="secondary" >Entrar</Button>
+          <Typography variant="h6"><Link to={'/register'}>Registre-se</Link></Typography>
+          </Box>
+        </Box>
       </LoginForm>
     </StyledBox>
   )
