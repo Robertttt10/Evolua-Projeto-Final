@@ -5,11 +5,10 @@ import { FormHandles } from "@unform/core";
 import { Form } from "@unform/web";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import FetchAPI from "../../../FetchAPI";
-import { CTextField } from "../Forms/CTextField";
+import FetchAPI from "../../FetchAPI";
+import { CTextField } from "../../shared/components/Forms/mainForms";
 
-export const Register: React.FC = () => {
-
+export const ProductRegister: React.FC = () => {
 
   const theme = useTheme();
 
@@ -28,7 +27,7 @@ export const Register: React.FC = () => {
   })
 
   const LoginForm = styled(Card)({
-    height: '70vh',
+    height: '80vh',
     display: 'flex',
     margin: 0,
     justifyContent: 'center'
@@ -40,31 +39,44 @@ export const Register: React.FC = () => {
   })
 
   interface IInputRegister {
-    inputName: string,
-    inputEmail: string,
-    inputPassword: string,
-    inputConfirmPassword: string,
+    inputProductName: string,
+    inputProductType: string,
+    inputProductCode: string,
+    inputProductDescription: string,
+    inputPrice: string,
+    inputQuantity: string,
+    inputImagem: string,
   }
 
   const handleSubmitRegister = async (dados: IInputRegister) => {
+
+    const dataImg = new FormData();
+
+    dataImg.append('image', dados.inputImagem[0])
+
+    console.log(dados.inputImagem);
     
-    if (dados.inputPassword !== dados.inputConfirmPassword) {
-      setValidate(true)
-      setHelperText('Favor verificar este campo')
-    } else {
-      console.log('teste');
-      
-      const data = {
-        name: dados.inputName,
-        userGroup: "user",
-        email: dados.inputEmail,
-        password: dados.inputPassword,
-        isActive: true        
-      }
-      const response = await FetchAPI({url:'users/createUsers', method:'POST', body:data});
-      console.log(response);
+
+    const data = {
+      product_name: dados.inputProductName,
+      product_type: dados.inputProductType,
+      product_description: dados.inputProductDescription,
+      product_number: dados.inputProductCode,
+      image:dados.inputImagem,
+      quantity: dados.inputQuantity,
+      price: dados.inputPrice
     }
+
+    const response = await FetchAPI({ url: 'products/new-product', method: 'POST', body: data });
+    console.log(JSON.stringify(response));
   }
+
+  const analisaUpload = () => {
+    console.log(analisaUpload);    
+  }
+
+  const form = document.getElementById('upload') 
+    form?.addEventListener('submit', analisaUpload)
 
   return (
     <StyledBox>
@@ -73,41 +85,55 @@ export const Register: React.FC = () => {
           <Box sx={{ display: 'flex', justifyContent: 'center' }}>
             <Typography variant="h6">Registro</Typography>
           </Box>
-          <Form onSubmit={handleSubmitRegister}>
+          <Form id="upload" onSubmit={handleSubmitRegister}>
             <Box sx={{ paddingTop: 5, paddingLeft: 10, paddingRight: 10 }}>
               <InputTextStyled
                 required
-                error={validateConfirmPassword}
-                name="inputName"
-                label="Nome"
+                name="inputProductName"
+                label="Produto"
                 variant="standard"
               />
               <Divider />
               <InputTextStyled
                 required
-                name="inputEmail"
-                label="E-mail"
-                type="email"
+                name="inputProductType"
+                label="Tipo"
                 variant="standard"
               />
               <Divider />
               <InputTextStyled
                 required
-                name="inputPassword"
-                label="Senha"
-                type="password"
-                autoComplete="current-password"
+                name="inputProductCode"
+                label="Código"
+                variant="standard"
+              />
+              <Divider />
+              <InputTextStyled
+                name="inputProductDescription"
+                label="Descrição"
                 variant="standard"
               />
               <Divider />
               <InputTextStyled
                 required
-                name="inputConfirmPassword"
-                label="Confirmar Senha"
-                type="password"
-                autoComplete="current-password"
+                name="inputQuantity"
+                label="Quantidade"
                 variant="standard"
-                helperText={helperText}
+              />
+              <Divider />
+              <InputTextStyled
+                required
+                name="inputPrice"
+                label="Preço"
+                variant="standard"
+              />
+              <Divider />
+              <InputTextStyled
+                required
+                name="inputImagem"
+                label="Imagem"
+                type="file"
+                variant="standard"
               />
             </Box>
             <Box sx={{ paddingTop: 5, paddingLeft: 10, paddingRight: 10, display: 'flex', justifyContent: 'right' }}>
